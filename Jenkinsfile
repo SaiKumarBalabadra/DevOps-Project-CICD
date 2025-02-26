@@ -43,12 +43,14 @@ pipeline {
 */
         stage('Pytest') {
             steps {
-                sh '''
-                python3 -m venv venv
-                . venv/bin/activate
-                pip install -r requirements.txt
-                pytest --junitxml=pytest-report.xml
-                '''
+                dir('src') {
+                    sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                    pytest --junitxml=pytest-report.xml
+                    '''
+                }
             }
         }
 
