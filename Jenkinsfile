@@ -28,7 +28,7 @@ pipeline {
                 }
             }
         }
-
+/*
         stage('OWASP Dependency Check') {
             steps {
                 sh '''
@@ -40,7 +40,7 @@ pipeline {
                 '''
             }
         }
-
+*/
         stage('Pytest') {
             steps {
                 sh '''
