@@ -32,7 +32,11 @@ pipeline {
         stage('OWASP Dependency Check') {
             steps {
                 sh '''
-                /usr/local/bin/dependency-check --project $APP_NAME --scan . --format HTML --out owasp-report
+                docker run --rm \
+                -v $(pwd):/src \
+                -v /var/lib/jenkins/owasp-data:/usr/share/dependency-check/data \
+                owasp/dependency-check \
+                --project my-python-app --scan /src --format HTML --out /src/owasp-report
                 '''
             }
         }
