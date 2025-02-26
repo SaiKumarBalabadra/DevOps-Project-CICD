@@ -44,6 +44,8 @@ pipeline {
         stage('Pytest') {
             steps {
                 sh '''
+                python3 -m venv venv
+                source venv/bin/activate
                 pip install -r requirements.txt
                 pytest --junitxml=pytest-report.xml
                 '''
