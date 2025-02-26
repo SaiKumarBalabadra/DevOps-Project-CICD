@@ -32,7 +32,7 @@ pipeline {
         stage('OWASP Dependency Check') {
             steps {
                 sh '''
-                sudo docker run --rm \
+                docker run --rm \
                 -v $(pwd):/src \
                 -v /var/lib/jenkins/owasp-data:/usr/share/dependency-check/data \
                 owasp/dependency-check \
