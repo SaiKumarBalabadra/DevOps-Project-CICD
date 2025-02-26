@@ -2,10 +2,13 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'your-docker-credentials-id'
-        DOCKER_REPO = 'your-private-docker-repo'
-        SONARQUBE_SERVER = 'your-sonarqube-server'
+        DOCKER_CREDENTIALS_ID = 'docker-creds'
+        DOCKER_REPO = 'isaikumarbalabadra/ronin-space'
+        SONARQUBE_SERVER = 'http://localhost:9000'
+        SONARQUBE_TOKEN = credentials('sonar-token')
         TRIVY_IMAGE = 'aquasec/trivy:latest'
+        APP_NAME = 'my-python-app'
+        IMAGE_TAG = "jenkins-app"
     }
 
     stages {
@@ -20,7 +23,7 @@ pipeline {
                 script {
                     def scannerHome = tool 'SonarQubeScanner'
                     withSonarQubeEnv('SonarQube') {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${APP_NAME} -Dsonar.sources=src/app"
                     }
                 }
             }
@@ -28,31 +31,34 @@ pipeline {
 
         stage('OWASP Dependency Check') {
             steps {
-                sh 'dependency-check.sh --project my-python-app --scan .'
+                sh '''
+                dependency-check.sh --project $APP_NAME --scan . --format HTML --out owasp-report
+                '''
             }
         }
 
         stage('Pytest') {
             steps {
-                sh 'pytest'
+                sh '''
+                pip install -r requirements.txt
+                pytest --junitxml=pytest-report.xml
+                '''
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_REPO}:latest")
+                    docker.build("${DOCKER_REPO}:${IMAGE_TAG}", "build/")
                 }
             }
         }
 
         stage('Trivy Scan') {
             steps {
-                script {
-                    docker.image(TRIVY_IMAGE).inside {
-                        sh 'trivy image --exit-code 1 --severity HIGH ${DOCKER_REPO}:latest'
-                    }
-                }
+                sh '''
+                trivy image --exit-code 1 --severity HIGH,CRITICAL ${DOCKER_REPO}:${IMAGE_TAG}
+                '''
             }
         }
 
@@ -60,7 +66,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', DOCKER_CREDENTIALS_ID) {
-                        docker.image("${DOCKER_REPO}:latest").push()
+                        docker.image("${DOCKER_REPO}:${IMAGE_TAG}").push()
                     }
                 }
             }
@@ -69,8 +75,8 @@ pipeline {
 
     post {
         always {
+            archiveArtifacts artifacts: 'src/pytest-report.xml, owasp-report/*', allowEmptyArchive: true
             cleanWs()
         }
     }
 }
-
