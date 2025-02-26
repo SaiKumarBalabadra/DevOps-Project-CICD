@@ -32,7 +32,7 @@ pipeline {
         stage('OWASP Dependency Check') {
             steps {
                 sh '''
-                dependency-check.sh --project $APP_NAME --scan . --format HTML --out owasp-report
+                /usr/local/bin/dependency-check --project $APP_NAME --scan . --format HTML --out owasp-report
                 '''
             }
         }
