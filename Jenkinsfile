@@ -4,8 +4,8 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-creds'
         DOCKER_REPO = 'isaikumarbalabadra/ronin-space'
-        SONARQUBE_SERVER = 'https://organic-journey-x55p74j5x449hwx5-9000.app.github.dev/'
-        SONARQUBE_TOKEN = credentials('sonar-token')
+        SONARQUBE_SERVER = 'http://localhost:9000/'
+            SONARQUBE_TOKEN = credentials('sonar-token')
         TRIVY_IMAGE = 'aquasec/trivy:latest'
         APP_NAME = 'my-python-app'
         IMAGE_TAG = "jenkins-app"
