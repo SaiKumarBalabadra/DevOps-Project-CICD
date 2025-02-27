@@ -1,21 +1,12 @@
-FROM python:3.9-alpine
-
-LABEL Name="Python Flask Demo App" Version="1.4.2"
-LABEL org.opencontainers.image.source="https://github.com/benc-uk/python-demoapp"
-
-ARG srcDir=src
+FROM python:3.9-alpine AS builder
+RUN apk add --no-cache gcc python3-dev musl-dev linux-headers
 WORKDIR /app
-
-COPY $srcDir/requirements.txt .
-
-# Fix: Install `ncurses` instead of `ncurses-base`
-RUN apk update && apk add --no-cache ncurses util-linux
-
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY $srcDir/run.py .
-COPY $srcDir/app ./app
-
-EXPOSE 80
-
-CMD ["gunicorn", "-b", "0.0.0.0:80", "run:app"]
+FROM python:3.9-alpine
+WORKDIR /app
+COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+COPY . .
+CMD ["python", "app.py"]
