@@ -4,6 +4,9 @@ RUN apk add --no-cache gcc musl-dev python3-dev linux-headers
 WORKDIR /app
 COPY src/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --upgrade -r requirements.txt
+
 
 FROM python:3.11-alpine
 WORKDIR /app
