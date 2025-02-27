@@ -65,7 +65,7 @@ pipeline {
         stage('Trivy Scan') {
             steps {
                 sh '''
-                trivy image --exit-code 1 --severity HIGH,CRITICAL --ignore-unfixed --ignore-policy ./.trivyignore ${DOCKER_REPO}:${IMAGE_TAG}
+                trivy image --exit-code 1 --severity HIGH,CRITICAL --ignorefile ./.trivyignore ${DOCKER_REPO}:${IMAGE_TAG}
                 '''
             }
         }
