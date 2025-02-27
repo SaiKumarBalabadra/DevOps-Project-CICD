@@ -1,7 +1,7 @@
 FROM python:3.9-alpine AS builder
 RUN apk add --no-cache gcc python3-dev musl-dev linux-headers
 WORKDIR /app
-COPY requirements.txt .
+COPY src/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 FROM python:3.9-alpine
