@@ -1,13 +1,12 @@
-FROM python:3.9-alpine AS builder
-RUN apk add --no-cache gcc python3-dev musl-dev linux-headers
+FROM python:3.11-alpine AS builder
+RUN pip install --no-cache-dir --upgrade pip setuptools
 WORKDIR /app
 COPY src/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir --upgrade pip setuptools
 
-FROM python:3.9-alpine
+FROM python:3.11-alpine
 WORKDIR /app
-COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
-COPY . .
-CMD ["python", "app.py"]
+COPY src/ /app
+CMD ["python", "run.py"]
