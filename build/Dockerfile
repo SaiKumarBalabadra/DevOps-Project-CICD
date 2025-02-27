@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bookworm
+FROM python:3.9-alpine
 
 LABEL Name="Python Flask Demo App" Version=1.4.2
 LABEL org.opencontainers.image.source = "https://github.com/benc-uk/python-demoapp"
@@ -7,6 +7,8 @@ ARG srcDir=src
 WORKDIR /app
 COPY $srcDir/requirements.txt .
 RUN apt-get update && apt-get install -y --only-upgrade ncurses-base util-linux && rm -rf /var/lib/apt/lists/*
+RUN apt-get remove -y perl-base
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY $srcDir/run.py .
