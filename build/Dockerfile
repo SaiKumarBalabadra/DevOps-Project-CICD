@@ -2,13 +2,17 @@ FROM python:3.11-alpine AS builder
 RUN apk add --no-cache gcc musl-dev python3-dev linux-headers
 WORKDIR /app
 COPY src/requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir --upgrade setuptools>=70.0.0
+# Create a virtual environment to isolate dependencies
+RUN python -m venv /venv
+# Install into the virtual environment
+RUN /venv/bin/pip install --no-cache-dir --upgrade pip
+RUN /venv/bin/pip install --no-cache-dir setuptools==70.0.0
+RUN /venv/bin/pip install --no-cache-dir -r requirements.txt
 
 FROM python:3.11-alpine
 WORKDIR /app
-COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
+# Copy the virtual environment
+COPY --from=builder /venv /venv
 COPY src/ /app
-CMD ["python", "run.py"]
+# Use the virtual environment's Python
+CMD ["/venv/bin/python", "run.py"]
