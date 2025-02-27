@@ -2,8 +2,9 @@ FROM python:3.11-alpine AS builder
 RUN apk add --no-cache gcc musl-dev python3-dev linux-headers
 WORKDIR /app
 COPY src/requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip setuptools>=70.0.0
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade setuptools>=70.0.0
 
 FROM python:3.11-alpine
 WORKDIR /app
