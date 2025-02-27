@@ -57,7 +57,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_REPO}:${IMAGE_TAG}", "build/")
+                    docker.build("${DOCKER_REPO}:${IMAGE_TAG}", "-f build/Dockerfile .")
                 }
             }
         }
