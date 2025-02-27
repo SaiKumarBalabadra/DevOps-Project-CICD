@@ -8,8 +8,8 @@ WORKDIR /app
 
 COPY $srcDir/requirements.txt .
 
-# Replace apt-get with apk for Alpine-based image
-RUN apk update && apk add --no-cache ncurses-base util-linux
+# Fix: Install `ncurses` instead of `ncurses-base`
+RUN apk update && apk add --no-cache ncurses util-linux
 
 RUN pip install --no-cache-dir -r requirements.txt
 
