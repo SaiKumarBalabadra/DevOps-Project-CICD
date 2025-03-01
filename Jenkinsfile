@@ -44,7 +44,14 @@ pipeline {
 */
         stage('OWASP Dependency Check') {
             steps {
-                sh '/usr/local/bin/dependency-check --project my-python-app --scan /src --format HTML --out /src/owasp-report --noupdate'
+                sh '''
+                /usr/local/bin/dependency-check \
+                    --project ${APP_NAME} \
+                    --scan ${WORKSPACE} \
+                    --format HTML \
+                    --out ${WORKSPACE}/owasp-report \
+                    --noupdate
+                '''
             }
         }
         stage('Pytest') {
