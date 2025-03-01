@@ -92,13 +92,6 @@ pipeline {
                 }
             }
         }
-        stage('deploy to kubernetes'){
-            steps{
-                script{
-
-                }
-            }
-        }
     }
 
     post {
