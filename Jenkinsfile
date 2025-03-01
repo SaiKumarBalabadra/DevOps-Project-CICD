@@ -49,8 +49,7 @@ pipeline {
                     --project ${APP_NAME} \
                     --scan ${WORKSPACE} \
                     --format HTML \
-                    --out ${WORKSPACE}/owasp-report \
-                    --noupdate
+                    --out ${WORKSPACE}/owasp-report
                 '''
             }
         }
