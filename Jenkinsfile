@@ -5,7 +5,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'docker-creds'
         DOCKER_REPO = 'isaikumarbalabadra/ronin-space'
         SONARQUBE_SERVER = 'http://localhost:9000/'
-            SONARQUBE_TOKEN = credentials('sonar-token')
+        SONARQUBE_TOKEN = credentials('sonar-token')
         TRIVY_IMAGE = 'aquasec/trivy:latest'
         APP_NAME = 'my-python-app'
         IMAGE_TAG = "jenkins-app"
@@ -36,11 +36,17 @@ pipeline {
                 -v $(pwd):/src \
                 -v /var/lib/jenkins/owasp-data:/usr/share/dependency-check/data \
                 owasp/dependency-check \
-                --project my-python-app --scan /src --format HTML --out /src/owasp-report
+                --project my-python-app --scan /src --format HTML --out /src/owasp-report \
+                --nvdApiKey "e375ba7a-acac-49f9-8e1f-09bb17f16447"
                 '''
             }
         }
 */
+        stage('OWASP Dependency Check') {
+            steps {
+                sh '/usr/local/bin/dependency-check --project my-python-app --scan /src --format HTML --out /src/owasp-report --noupdate'
+            }
+        }
         stage('Pytest') {
             steps {
                 dir('src') {
@@ -76,6 +82,13 @@ pipeline {
                     docker.withRegistry('', DOCKER_CREDENTIALS_ID) {
                         docker.image("${DOCKER_REPO}:${IMAGE_TAG}").push()
                     }
+                }
+            }
+        }
+        stage('deploy to kubernetes'){
+            steps{
+                script{
+
                 }
             }
         }
