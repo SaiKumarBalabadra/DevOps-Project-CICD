@@ -58,28 +58,9 @@ This project covers **CI/CD automation, containerization, security scanning, and
 │   ├── Chart.yaml                          # Helm chart metadata
 │   ├── charts/                             # Dependencies for the chart
 │   ├── templates/                          # Kubernetes YAML templates
-│   │   ├── NOTES.txt                       # Notes for Helm users
-│   │   ├── _helpers.tpl                    # Helper functions for templates
-│   │   ├── deployment.yaml                 # Kubernetes deployment definition
-│   │   ├── hpa.yaml                        # Horizontal Pod Autoscaler
-│   │   ├── ingress.yaml                    # Ingress controller definition
-│   │   ├── secret.yaml                     # Secrets configuration
-│   │   ├── service.yaml                    # Service definition
-│   │   ├── serviceaccount.yaml             # Service account configuration
-│   │   └── tests/                          # Helm chart test files
-│   │       └── test-connection.yaml        # Test connection to the app
 │   ├── values.yaml                         # Helm values for app configuration
 └── src/                                    # Python application source code
     ├── app/                                # Application module
-    │   ├── __init__.py                     # Package initialization
-    │   ├── __pycache/                      # Cached Python files
-    │   │   └── __init__.cpython-310.pyc    # Python cache
-    │   ├── apis.py                         # API definitions
-    │   ├── conftest.py                     # Pytest configuration
-    │   ├── static/                         # Static files (CSS, JS, Images)
-    │   ├── templates/                      # HTML templates
-    │   ├── tests/                          # Test files for the application
-    │   └── views.py                        # Flask views
     ├── requirements.txt                    # Python dependencies
     └── run.py                              # Application entry point
 ```
