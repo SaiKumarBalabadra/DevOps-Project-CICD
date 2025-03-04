@@ -28,19 +28,6 @@ pipeline {
                 }
             }
         }
-/*
-        stage('OWASP Dependency Check') {
-            steps {
-                sh '''
-                docker run --rm \
-                -v $(pwd):/src \
-                -v /var/lib/jenkins/owasp-data:/usr/share/dependency-check/data \
-                owasp/dependency-check \
-                --project my-python-app --scan /src --format HTML --out /src/owasp-report \
-                --nvdApiKey "e375ba7a-acac-49f9-8e1f-09bb17f16447"
-                '''
-            }
-        }
         stage('OWASP Dependency Check') {
             steps {
                 sh '''
@@ -51,8 +38,7 @@ pipeline {
                     --out ${WORKSPACE}/owasp-report
                 '''
             }
-        }
-*/        
+        }        
         stage('Pytest') {
             steps {
                 dir('src') {
