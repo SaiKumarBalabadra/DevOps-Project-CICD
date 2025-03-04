@@ -12,6 +12,7 @@ This project covers **CI/CD automation, containerization, security scanning, and
 | **GitHub** ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white) | Code repository |
 | **Jenkins** ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=flat-square&logo=jenkins&logoColor=white) | CI/CD pipeline automation |
 | **SonarQube** ![SonarQube](https://img.shields.io/badge/SonarQube-4E9BCD?style=flat-square&logo=sonarqube&logoColor=white) | Code quality and security scanning |
+| **OWASP Dependency-Check** ![OWASP](https://img.shields.io/badge/OWASP%20Dependency--Check-000?style=flat-square&logo=owasp&logoColor=white) | Detects vulnerable dependencies in the application |
 | **Pytest** 🧪 | Unit testing for the Python application |
 | **Trivy** ![Trivy](https://img.shields.io/badge/Trivy-00979D?style=flat-square&logo=trivy&logoColor=white) | Container security scanning |
 | **Docker** ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) | Containerization of the application |
@@ -27,13 +28,15 @@ This project covers **CI/CD automation, containerization, security scanning, and
 2. **Jenkins Pipeline**:
    - **Checkout Code** from GitHub  
    - **SonarQube Scan** for code quality  
-   - **Security Scans** with **Trivy** and **OWASP ZAP**  
+   - **OWASP Dependency-Check** for dependency vulnerability analysis  
+   - **Security Scans** with **Trivy**
    - **Unit Tests** using **Pytest**  
    - **Build & Push Docker Image** to a **private Docker repository**  
 3. **Kubernetes Deployment**:  
    - **Helm update** with new image version  
    - **Deploy application on Kops-managed AWS cluster**  
    - **Configure Ingress with AWS ALB & Route 53** for external access  
+ 
 
 ---
 
