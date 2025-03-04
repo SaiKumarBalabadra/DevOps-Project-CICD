@@ -50,13 +50,40 @@ This project covers **CI/CD automation, containerization, security scanning, and
 ## 📂 **Project Structure**  
 
 ```bash
-├── jenkinsfile                # Jenkins pipeline script
-├── helm/                      # Helm charts for Kubernetes deployment
-│   ├── templates/             # Deployment, Service, Ingress YAMLs
-│   ├── values.yaml            # Helm values for app configuration
-├── app/                       # Python application source code
-├── Dockerfile                 # Docker image build configuration
-└── README.md                  # Project documentation
+├── Jenkinsfile                  # Jenkins pipeline script
+├── README.md                    # Project documentation
+├── build/                        # Docker build related files
+│   └── Dockerfile                # Docker image build configuration
+├── python-helm-chart/            # Helm charts for Kubernetes deployment
+│   ├── Chart.yaml                # Helm chart metadata
+│   ├── Chart.yaml:Zone.Identifier # Windows-specific file (ignore)
+│   ├── charts/                   # Dependencies for the chart
+│   ├── templates/                # Kubernetes YAML templates
+│   │   ├── NOTES.txt             # Notes for Helm users
+│   │   ├── _helpers.tpl          # Helper functions for templates
+│   │   ├── deployment.yaml       # Kubernetes deployment definition
+│   │   ├── hpa.yaml              # Horizontal Pod Autoscaler
+│   │   ├── ingress.yaml          # Ingress controller definition
+│   │   ├── secret.yaml           # Secrets configuration
+│   │   ├── service.yaml          # Service definition
+│   │   ├── serviceaccount.yaml   # Service account configuration
+│   │   └── tests/                # Helm chart test files
+│   │       └── test-connection.yaml # Test connection to the app
+│   ├── values.yaml               # Helm values for app configuration
+│   └── values.yaml:Zone.Identifier # Windows-specific file (ignore)
+└── src/                          # Python application source code
+    ├── app/                       # Application module
+    │   ├── __init__.py            # Package initialization
+    │   ├── __pycache/             # Cached Python files
+    │   │   └── __init__.cpython-310.pyc # Python cache
+    │   ├── apis.py                # API definitions
+    │   ├── conftest.py            # Pytest configuration
+    │   ├── static/                # Static files (CSS, JS, Images)
+    │   ├── templates/             # HTML templates
+    │   ├── tests/                 # Test files for the application
+    │   └── views.py               # Flask views
+    ├── requirements.txt           # Python dependencies
+    └── run.py                     # Application entry point
 ```
 # 🔥 Why This Project Matters?
 
