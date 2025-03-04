@@ -57,7 +57,7 @@ This project covers **CI/CD automation, containerization, security scanning, and
 ├── app/                       # Python application source code
 ├── Dockerfile                 # Docker image build configuration
 └── README.md                  # Project documentation
-
+```
 # 🔥 Why This Project Matters?
 
 - ✅ **End-to-End DevOps Workflow**: From CI/CD to production deployment.
